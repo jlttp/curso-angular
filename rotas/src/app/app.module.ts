@@ -18,6 +18,7 @@ import { AuthService } from './login/auth.service';
 import { AuthGuard } from './guards/auth.guard';
 import { CursosGuard } from './guards/cursos.guard';
 import { AlunosGuard } from './guards/alunos.guard';
+import { AlunoDetalheResolver } from './alunos/guards/aluno-detalhe.resolver';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { AlunosGuard } from './guards/alunos.guard';
     AuthService,
     AuthGuard,
     CursosGuard,
-    AlunosGuard
+    AlunosGuard,
+    AlunoDetalheResolver
   ],
   bootstrap: [AppComponent]
 })
