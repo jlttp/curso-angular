@@ -19,12 +19,14 @@ import { AuthGuard } from './guards/auth.guard';
 import { CursosGuard } from './guards/cursos.guard';
 import { AlunosGuard } from './guards/alunos.guard';
 import { AlunoDetalheResolver } from './alunos/guards/aluno-detalhe.resolver';
+import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada/pagina-nao-encontrada.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     LoginComponent,
+    PaginaNaoEncontradaComponent,
     //AlunosComponent//,
     //CursosComponent,
     //CursoDetalheComponent,
