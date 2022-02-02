@@ -11,8 +11,8 @@ export class AlunosGuard implements CanActivateChild {
     //console.log(state);
 
     if(state.url.includes('editar')){
-      alert('Você não tem permissão para editar!');
-      return false;
+      //alert('Você não tem permissão para editar!');
+      //return false;
     }
 
     return true;
