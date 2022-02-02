@@ -16,13 +16,15 @@ const routes: Routes = [
     path: 'cursos',
     loadChildren: () => import('./cursos/cursos.module').then(m => m.CursosModule),
     canActivate: [AuthGuard],
-    canActivateChild: [CursosGuard]
+    canActivateChild: [CursosGuard],
+    canLoad: [AuthGuard]
   },
   {
     path: 'alunos',
     loadChildren: () => import('./alunos/alunos.module').then(m => m.AlunosModule),
-    canActivate: [AuthGuard]//,
+    canActivate: [AuthGuard],
     //canActivateChild: [AlunosGuard] //passar para alunos routing module
+    canLoad: [AuthGuard]
   },
   //{ path: 'cursos', component: CursosComponent },
   //{ path: 'curso/:id', component: CursoDetalheComponent },
