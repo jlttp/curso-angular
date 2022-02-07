@@ -17,9 +17,11 @@ export class TemplateFormComponent implements OnInit {
   constructor(private http: HttpClient) { }
 
   onSubmit(form: NgForm){
-    console.log(form.value);
 
-    console.log(this.usuario);
+    this.http.post('https://httpbin.org/post', JSON.stringify(form.value))
+      .subscribe(dados => {
+        console.log(dados);
+      });
   }
 
   consultaCEP(cep: any, form: any){
