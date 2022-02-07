@@ -23,7 +23,7 @@
     <div class="row g-3 mb-3">
       <div class="col-sm-3">
         <label for="cep" class="control-label">CEP</label>
-        <input type="text" class="form-control" id="cep" name="cep" ngModel required #cep="ngModel" [class.is-invalid]="!cep.valid && cep.touched">
+        <input type="text" class="form-control" id="cep" name="cep" ngModel required #cep="ngModel" [class.is-invalid]="!cep.valid && cep.touched" (blur)="consultaCEP($event.target, f)">
         <div class="invalid-message col-auto" *ngIf="!cep.valid && cep.touched">
           CEP é obrigatório.
         </div>
@@ -46,7 +46,7 @@
     <div class="row g-1 mb-3">
       <div class="col-sm-12">
         <label for="rua" class="form-label">Rua</label>
-        <input type="text" class="form-control" name="rua" id="rua" [(ngModel)]="usuario.rua" required #rua="ngModel" [class.is-invalid]="!rua.valid && rua.touched">
+        <input type="text" class="form-control" name="rua" id="rua" ngModel required #rua="ngModel" [class.is-invalid]="!rua.valid && rua.touched">
         <div class="invalid-message col-auto" *ngIf="!rua.valid && rua.touched">
           O nome da Rua é obrigatório.
         </div>

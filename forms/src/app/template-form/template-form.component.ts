@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-template-form',
@@ -13,12 +14,56 @@ export class TemplateFormComponent implements OnInit {
     email: null
   }
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   onSubmit(form: NgForm){
     console.log(form.value);
 
     console.log(this.usuario);
+  }
+
+  consultaCEP(cep: any, form: any){
+    cep = cep.value;
+    cep = cep.replace(/\D/g, '');
+
+    if(cep != ""){
+      var validacep = /^[0-9]{8}$/;
+
+      if(validacep.test(cep)){
+        this.http.get(`//viacep.com.br/ws/${cep}/json`)
+          .subscribe(dados => {
+            this.populaDadosForm(dados, form);
+          });
+      }
+    }
+  }
+
+  populaDadosForm(dados: any, form: any){
+    /*
+    form.setValue({
+      nome: form.value.nome,
+      email: form.value.email,
+      endereco: {
+        cep: dados.cep,
+        numero: '',
+        complemento: dados.complemento,
+        rua: dados.logradouro,
+        bairro: dados.bairro,
+        cidade: dados.localidade,
+        estado: dados.uf
+      }
+    });
+    */
+    form.form.patchValue({
+      endereco: {
+        cep: dados.cep,
+        complemento: dados.complemento,
+        rua: dados.logradouro,
+        bairro: dados.bairro,
+        cidade: dados.localidade,
+        estado: dados.uf
+      }
+    });
   }
 
   ngOnInit(): void {
