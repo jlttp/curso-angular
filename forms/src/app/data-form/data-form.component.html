@@ -24,7 +24,7 @@
     <div class="row g-3 mb-3">
       <div class="col-sm-3">
         <label for="cep" class="control-label">CEP</label>
-        <input type="text" class="form-control" formControlName="cep" id="cep" name="cep" [ngClass]="aplicaCssErro('endereco.cep')">
+        <input type="text" class="form-control" formControlName="cep" id="cep" name="cep" [ngClass]="aplicaCssErro('endereco.cep')" (blur)="consultaCEP()">
         <div class="invalid-feedback">
           CEP é um campo obrigatório.
         </div>
