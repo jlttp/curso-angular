@@ -98,6 +98,19 @@
         <option *ngFor="let tecnologia of tecnologias" [value]="tecnologia.nome">{{ tecnologia.desc }}</option>
       </select>
     </div>
+
+    <div class="col-sm-3 mb-3">
+      <label for="newsletter" class="control-label">Newsletter</label>
+      <div id="newsletter">
+        <div class="col-sm-4" *ngFor="let item of newsletterOp">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" formControlName="newsletter" [value]="item.valor">
+            <label class="form-check-label">{{ item.desc }}</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 
   <div class="col-auto mb-3">
