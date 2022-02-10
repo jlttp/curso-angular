@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DropdownService } from '../shared/service/dropdown.service';
 import { EstadoBr } from '../shared/models/estado-br';
+import { ConsultaCepService } from '../shared/service/consulta-cep.service';
 
 @Component({
   selector: 'app-data-form',
@@ -17,26 +18,28 @@ export class DataFormComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private http: HttpClient,
-    private dropdownService: DropdownService
+    private dropdownService: DropdownService,
+    private cepService: ConsultaCepService
   ) { }
 
   ngOnInit(): void {
+
+    this.dropdownService.getEstadosBr()
+     .subscribe(dados => {
+       this.estados = dados;
+       console.log(`recebido nos estados: ${this.estados}`)
+     });
+
     /*
     this.formulario = new FormGroup({
       nome: new FormControl(null),
       email: new FormControl(null)
     });
     */
-   this.dropdownService.getEstadosBr()
-    .subscribe(dados => {
-      this.estados = dados;
-      console.log(`recebido nos estados: ${this.estados}`)
-    });
-
-   this.formulario = this.formBuilder.group({
-     nome: [null, [Validators.required]],
-     email: [null, [Validators.required, Validators.email]],
-     endereco: this.formBuilder.group({
+    this.formulario = this.formBuilder.group({
+      nome: [null, [Validators.required]],
+      email: [null, [Validators.required, Validators.email]],
+      endereco: this.formBuilder.group({
       cep: [null, [Validators.required]],
       numero: [null, [Validators.required]],
       complemento: [null],
@@ -44,8 +47,8 @@ export class DataFormComponent implements OnInit {
       bairro: [null, [Validators.required]],
       cidade: [null, [Validators.required]],
       estado: [null, [Validators.required]]
-     })
-   });
+      })
+    });
 
     // para email: Validators.pattern("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
     // [Validators.required, Validators.minLength(3), Validators.maxLength(20)]
@@ -104,20 +107,12 @@ export class DataFormComponent implements OnInit {
 
   consultaCEP(){
     let cep = this.formulario.get('endereco.cep')?.value;
-    cep = cep.replace(/\D/g, '');
 
-    if(cep != ""){
-      var validacep = /^[0-9]{8}$/;
-
-      if(validacep.test(cep)){
-
-        this.resetaDadosForm();
-
-        this.http.get(`//viacep.com.br/ws/${cep}/json`)
-          .subscribe(dados => {
-            this.populaDadosForm(dados);
-          });
-      }
+    if(cep != null && cep !== ''){
+      this.cepService.consultaCEP(cep)
+        .subscribe(dados => {
+          this.populaDadosForm(dados);
+        });
     }
   }
 
