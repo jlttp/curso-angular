@@ -73,7 +73,9 @@
 
       <div class="col-sm-3 mb-3">
         <label for="estado" class="control-label">Estado</label>
-        <input type="text" class="form-control" formControlName="estado" id="estado" name="estado" [ngClass]="aplicaCssErro('endereco.estado')">
+        <select class="form-control" formControlName="estado" id="estado" name="estado" [ngClass]="aplicaCssErro('endereco.estado')">
+          <option *ngFor="let estado of estados | async" [value]="estado.sigla">{{ estado.nome }}</option>
+        </select>
         <div class="invalid-feedback">
           Estado é um campo obrigatório.
         </div>
