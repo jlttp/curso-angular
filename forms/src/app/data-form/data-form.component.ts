@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DropdownService } from '../shared/service/dropdown.service';
 import { EstadoBr } from '../shared/models/estado-br';
 import { ConsultaCepService } from '../shared/service/consulta-cep.service';
@@ -19,6 +19,8 @@ export class DataFormComponent implements OnInit {
   cargos!: any[];
   tecnologias!: any[];
   newsletterOp!: any[];
+  frameworks = ['Angular', 'React', 'Vue', 'Sencha'];
+  //frameworks!: any[];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -41,6 +43,7 @@ export class DataFormComponent implements OnInit {
     this.cargos = this.dropdownService.getCargos();
     this.tecnologias = this.dropdownService.getTecnologias();
     this.newsletterOp = this.dropdownService.getNewsletter();
+    //this.frameworks = ['Angular', 'React', 'Vue', 'Sencha'];
 
     /*
     this.formulario = new FormGroup({
@@ -65,7 +68,8 @@ export class DataFormComponent implements OnInit {
       tecnologias: [null],
       newsletter: ['s'],
       //termos: [null, Validators.pattern('true')]
-      termos: [null, Validators.requiredTrue]
+      termos: [null, Validators.requiredTrue],
+      frameworks: this.buildFrameworks()
     });
 
     // para email: Validators.pattern("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
@@ -73,10 +77,37 @@ export class DataFormComponent implements OnInit {
 
   }
 
+  buildFrameworks(){
+
+    const values = this.frameworks.map(v => new FormControl(false));
+
+    return this.formBuilder.array(values);
+
+    /*
+    this.formBuilder.array([
+      new FormControl(false),
+      new FormControl(false),
+      new FormControl(false),
+      new FormControl(false)
+    ]);
+    */
+
+  }
+
   onSubmit(){
 
+    let valueSubmit = Object.assign({}, this.formulario.value);
+
+    valueSubmit = Object.assign(valueSubmit, {
+      frameworks: valueSubmit.frameworks
+        .map((v: any, i: number) => v ? this.frameworks[i] : null)
+        .filter((v:  any) => v != null)
+    });
+
+    console.log(valueSubmit);
+
     if(this.formulario.valid){
-      this.http.post('https://httpbin.org/post', JSON.stringify(this.formulario.value))
+      this.http.post('https://httpbin.org/post', JSON.stringify(valueSubmit))
         .subscribe(dados => {
           console.log(dados);
           //reseta o form
