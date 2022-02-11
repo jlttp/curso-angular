@@ -115,10 +115,14 @@
   <div class="col-md-12">
     <label for="frameworks" class="control-label">Frameworks</label>
     <div id="frameworks" class="row">
-      <div class="col-sm-3" formArrayName="frameworks" *ngFor="let item of formulario.get('frameworks')?.value; let i=index">
+      <div class="col-sm-3" formArrayName="frameworks" *ngFor="let item of frameworks; let i=index">
+        <!--*ngFor="let item of formulario.get('frameworks')?.value-->
         <div class="form-check form-check-inline">
-          <input class="form-check-input" type="checkbox" [formControlName]="i">
-          <label class="form-check-label">{{ frameworks[i] }}</label>
+          <input class="form-check-input" type="checkbox" [formControlName]="i" [ngClass]="aplicaCssErro('frameworks')">
+          <label class="form-check-label">{{ item }}</label>
+          <div class="invalid-feedback">
+            Você precisa marcar pelo menos um Framework.
+          </div>
         </div>
       </div>
     </div>
