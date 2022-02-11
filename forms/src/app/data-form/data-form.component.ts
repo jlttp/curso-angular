@@ -63,7 +63,9 @@ export class DataFormComponent implements OnInit {
 
       cargo: [null],
       tecnologias: [null],
-      newsletter: ['s']
+      newsletter: ['s'],
+      //termos: [null, Validators.pattern('true')]
+      termos: [null, Validators.requiredTrue]
     });
 
     // para email: Validators.pattern("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
