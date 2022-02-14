@@ -3,9 +3,12 @@
     <div class="col-sm-12">
       <label for="nome" class="form-label">Nome</label>
       <input type="text" class="form-control" formControlName="nome" id="nome" placeholder="Nome" [ngClass]="aplicaCssErro('nome')">
-      <div class="invalid-feedback">
+      <app-error-message [control]="formulario.get('nome')" label="Nome">
+      </app-error-message>
+
+      <!--div class="invalid-feedback">
         Nome é um campo obrigatório.
-      </div>
+      </div-->
     </div>
   </div>
 
