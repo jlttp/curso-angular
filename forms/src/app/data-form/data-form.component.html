@@ -16,6 +16,15 @@
       <div class="invalid-feedback">
         Digite um e-mail válido.
       </div>
+      <div class="pending-message" *ngIf="formulario.get('email')?.status === 'PENDING'">
+        Validando e-mail...
+      </div>
+      <div class="valid-message" *ngIf="formulario.get('email')?.status === 'VALID'">
+        E-mail válido!
+      </div>
+      <div class="invalid-message" *ngIf="formulario.get('email')?.hasError('emailInvalido')">
+        Esse e-mail já está cadastrado!
+      </div>
     </div>
   </div>
 
