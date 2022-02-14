@@ -19,6 +19,16 @@
     </div>
   </div>
 
+  <div class="row g-1 mb-3">
+    <div class="col-sm-12">
+      <label for="confirmarEmail" class="form-label">Confirme seu e-mail</label>
+      <input type="confirmarEmail" class="form-control" formControlName="confirmarEmail" id="confirmarEmail" placeholder="email@email.com" [ngClass]="aplicaCssErro('confirmarEmail')">
+      <div class="invalid-feedback">
+        A confirmação de e-mail precisa ser um e-mail válido e igual ao e-mail informado.
+      </div>
+    </div>
+  </div>
+
   <div formGroupName="endereco">
 
     <div class="row g-3 mb-3">
