@@ -144,6 +144,7 @@ export class DataFormComponent implements OnInit {
     Object.keys(formGroup.controls).forEach(campo => {
       const controle = formGroup.get(campo);
       controle?.markAsDirty();
+      controle?.markAsTouched();
       if(controle instanceof FormGroup){
         this.verificaValidacoesForm(controle);
       }

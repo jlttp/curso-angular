@@ -65,7 +65,10 @@ export class FormValidations {
       'required': `${fieldName} é obrigatório.`,
       'minlength': `${fieldName} precisa ter no mínimo ${validatorValue.requiredLength} caracteres.`,
       'maxlength': `${fieldName} precisa ter no máximo ${validatorValue.requiredLength} caracteres.`,
-      'cepInvalido': 'CEP inválido.'
+      'cepInvalid': 'O CEP é inválido.',
+      'emailInvalido': 'O e-mail informado já está cadastrado!',
+      'equalsTo': 'Os campos precisam ser iguais.',
+      'pattern': 'Campo inválido.'
     };
 
     //return config[validatorName];
@@ -78,8 +81,14 @@ export class FormValidations {
         return config['minlength'];
       case 'maxlength':
         return config['maxlength'];
-      case 'cepInvalido':
-        return config['cepInvalido'];
+      case 'cepInvalid':
+        return config['cepInvalid'];
+      case 'emailInvalido':
+        return config['emailInvalido'];
+      case 'equalsTo':
+        return config['equalsTo'];
+      case 'pattern':
+        return config['pattern'];
       default:
         return null;
     }

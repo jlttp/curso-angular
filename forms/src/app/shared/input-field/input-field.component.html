@@ -1,0 +1,3 @@
+<label [attr.for]="id" class="form-label">{{ label }}</label>
+<input [type]="type" class="form-control" [id]="id" [placeholder]="placeholder" [ngClass]="classeCss" [readonly]="!!isReadOnly" [(ngModel)]="value">
+<app-error-message [control]="control" [label]="label"></app-error-message>
