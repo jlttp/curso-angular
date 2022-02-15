@@ -68,7 +68,21 @@ export class FormValidations {
       'cepInvalido': 'CEP inválido.'
     };
 
-    return config[validatorName];
+    //return config[validatorName];
+
+    //solução temporária
+    switch (validatorName) {
+      case 'required':
+        return config['required'];
+      case 'minlength':
+        return config['minlength'];
+      case 'maxlength':
+        return config['maxlength'];
+      case 'cepInvalido':
+        return config['cepInvalido'];
+      default:
+        return null;
+    }
 
   }
 
