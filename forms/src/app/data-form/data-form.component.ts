@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators, FormArray } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DropdownService } from '../shared/service/dropdown.service';
 import { EstadoBr } from '../shared/models/estado-br';
 import { ConsultaCepService } from '../shared/service/consulta-cep.service';
-import { map, Observable } from 'rxjs';
+import { map, tap, Observable, distinctUntilChanged, switchMap, empty } from 'rxjs';
 import { FormValidations } from '../shared/form-validations';
 import { VerificaEmailService } from './services/verifica-email.service';
 
@@ -77,6 +77,17 @@ export class DataFormComponent implements OnInit {
       termos: [null, Validators.requiredTrue],
       frameworks: this.buildFrameworks()
     });
+
+    this.formulario.get('endereco.cep')?.statusChanges
+      .pipe(
+        distinctUntilChanged(),
+        tap(value => console.log(`status CEP: ${value}`)),
+        switchMap(status => status === 'VALID' ?
+          this.cepService.consultaCEP(this.formulario.get('endereco.cep')?.value)
+          : empty()
+        )
+      )
+      .subscribe(dados => dados ? this.populaDadosForm(dados) : {});
 
     // para email: Validators.pattern("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
     // [Validators.required, Validators.minLength(3), Validators.maxLength(20)]
@@ -175,7 +186,7 @@ export class DataFormComponent implements OnInit {
   populaDadosForm(dados: any){
     this.formulario.patchValue({
       endereco: {
-        cep: dados.cep,
+        //cep: dados.cep,
         complemento: dados.complemento,
         rua: dados.logradouro,
         bairro: dados.bairro,
