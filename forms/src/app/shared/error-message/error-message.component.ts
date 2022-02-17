@@ -23,12 +23,12 @@ export class ErrorMessageComponent implements OnInit {
   get errorMessage(){
 
     for(const propertyName in this.control?.errors){
-      console.log(`property name ${propertyName}`);
+      //console.log(`property name ${propertyName}`);
       if(this.control?.errors.hasOwnProperty(propertyName) && this.control.touched){
-        console.log('entrou');
-        console.log(this.label);
-        console.log(propertyName);
-        console.log(this.control.errors[propertyName]);
+        //console.log('entrou');
+        //console.log(this.label);
+        //console.log(propertyName);
+        //console.log(this.control.errors[propertyName]);
         return FormValidations.getErrorMsg(this.label, propertyName, this.control.errors[propertyName]);
       }
     }

@@ -8,6 +8,7 @@ import { map, tap, Observable, distinctUntilChanged, switchMap, empty } from 'rx
 import { FormValidations } from '../shared/form-validations';
 import { VerificaEmailService } from './services/verifica-email.service';
 import { BaseFormComponent } from '../shared/base-form/base-form.component';
+import { Cidade } from '../shared/models/cidade';
 
 @Component({
   selector: 'app-data-form',
@@ -17,8 +18,9 @@ import { BaseFormComponent } from '../shared/base-form/base-form.component';
 export class DataFormComponent extends BaseFormComponent implements OnInit {
 
   //formulario!: FormGroup;
-  //estados!: EstadoBr[];
-  estados!: Observable<EstadoBr[]>;
+  estados!: EstadoBr[];
+  cidades!: Cidade[];
+  //estados!: Observable<EstadoBr[]>;
   cargos!: any[];
   tecnologias!: any[];
   newsletterOp!: any[];
@@ -46,7 +48,11 @@ export class DataFormComponent extends BaseFormComponent implements OnInit {
        console.log(`recebido nos estados: ${this.estados}`)
      });
      */
-    this.estados = this.dropdownService.getEstadosBr();
+
+    // this.estados = this.dropdownService.getEstadosBr();
+
+    this.dropdownService.getEstadosBr()
+      .subscribe(dados => this.estados = dados);
 
     this.cargos = this.dropdownService.getCargos();
     this.tecnologias = this.dropdownService.getTecnologias();
@@ -91,6 +97,18 @@ export class DataFormComponent extends BaseFormComponent implements OnInit {
         )
       )
       .subscribe(dados => dados ? this.populaDadosForm(dados) : {});
+
+      this.formulario.get('endereco.estado')?.valueChanges
+        .pipe(
+          tap(estado => console.log(`Novo estado: ${estado}`)),
+          map(estado => this.estados.filter(e => e.sigla === estado)),
+          map(estados => estados && estados.length > 0 ? estados[0].id : empty()),
+          switchMap(estadoId => this.dropdownService.getCidades(Number(estadoId))),
+          tap(console.log)
+        )
+        .subscribe(cidades => this.cidades = cidades);
+
+      //this.dropdownService.getCidades(8).subscribe(console.log);
 
     // para email: Validators.pattern("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
     // [Validators.required, Validators.minLength(3), Validators.maxLength(20)]

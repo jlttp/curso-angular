@@ -106,11 +106,25 @@
         </app-error-message>
       </div>
 
+      <!--
       <div class="col-sm-4 mb-3">
         <label for="cidade" class="control-label">Cidade</label>
         <input type="text" class="form-control" formControlName="cidade" id="cidade" name="cidade" [ngClass]="aplicaCssErro('endereco.cidade')">
-        <!--div class="invalid-feedback">
+        </!--div class="invalid-feedback">
           Cidade é um campo obrigatório.
+        </div--//>
+        <app-error-message [control]="formulario.get('endereco.cidade')" label="Cidade">
+        </app-error-message>
+      </div>
+      -->
+
+      <div class="col-sm-4 mb-3">
+        <label for="cidade" class="control-label">Cidade</label>
+        <select class="form-control" formControlName="cidade" id="cidade" name="cidade" [ngClass]="aplicaCssErro('endereco.cidade')">
+          <option *ngFor="let cidade of cidades" [value]="cidade.nome">{{ cidade.nome }}</option>
+        </select>
+        <!--div class="invalid-feedback">
+          Estado é um campo obrigatório.
         </div-->
         <app-error-message [control]="formulario.get('endereco.cidade')" label="Cidade">
         </app-error-message>
@@ -119,7 +133,7 @@
       <div class="col-sm-3 mb-3">
         <label for="estado" class="control-label">Estado</label>
         <select class="form-control" formControlName="estado" id="estado" name="estado" [ngClass]="aplicaCssErro('endereco.estado')">
-          <option *ngFor="let estado of estados | async" [value]="estado.sigla">{{ estado.nome }}</option>
+          <option *ngFor="let estado of estados" [value]="estado.sigla">{{ estado.nome }}</option>
         </select>
         <!--div class="invalid-feedback">
           Estado é um campo obrigatório.
