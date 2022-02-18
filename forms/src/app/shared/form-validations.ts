@@ -14,9 +14,9 @@ export class FormValidations {
 
       if (formArray instanceof FormArray){
         const totalChecked = formArray.controls
-        .map(v => v.value)
-        .reduce((total, current) => current ? total + current : total, 0);
-      return totalChecked >= min ? null : { required: true };
+          .map(v => v.value)
+          .reduce((total, current) => current ? total + current : total, 0);
+        return totalChecked >= min ? null : { required: true };
       }
       throw new Error('formArray is not a instance of FormArray');
     };
@@ -60,7 +60,7 @@ export class FormValidations {
   }
 
   static getErrorMsg(fieldName: string, validatorName: string, validatorValue?: any){
-    console.log('chamou getErrorMsg');
+    //console.log('chamou getErrorMsg');
     const config: {[id: string] : string} = {
       'required': `${fieldName} é obrigatório.`,
       'minlength': `${fieldName} precisa ter no mínimo ${validatorValue.requiredLength} caracteres.`,
