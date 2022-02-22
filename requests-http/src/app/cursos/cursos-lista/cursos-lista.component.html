@@ -5,7 +5,7 @@
     </div>
     <div class="float-end">
       <button type="button" class="btn btn-primary" [routerLink]="['novo']">Novo Curso</button>
-      <button type="button" class="btn btn-secondary">Atualizar</button>
+      <button type="button" class="btn btn-secondary" (click)="onRefresh()" >Atualizar</button>
     </div>
   </div>
   <div class="card-body">
@@ -37,11 +37,16 @@
     </table>
 
     <ng-template #loading>
-      <div class="d-flex justify-content-center">
-        <div class="spinner-border text-dark" role="status">
-          <span class="sr-only"></span>
-        </div>
+      <div *ngIf="error$ | async; else loadingError">
+        Erro ao carregar cursos. Tente novamente mais tarde.
       </div>
+      <ng-template #loadingError>
+        <div class="d-flex justify-content-center">
+          <div class="spinner-border text-dark" role="status">
+            <span class="sr-only"></span>
+          </div>
+        </div>
+      </ng-template>
     </ng-template>
 
   </div>
