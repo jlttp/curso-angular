@@ -13,10 +13,15 @@ export enum AlertTypes {
 export class AlertModalService {
   constructor(private modalService: BsModalService) { }
 
-  private showAlert(message: string, type: AlertTypes){
+  private showAlert(message: string, type: AlertTypes, dismissTimeout?: number){
     const bsModalRef: BsModalRef = this.modalService.show(AlertModalComponent);
     bsModalRef.content.type = type;
     bsModalRef.content.message = message;
+
+    if(dismissTimeout){
+      setTimeout(() => bsModalRef.hide(), dismissTimeout);
+    }
+
   }
 
   showAlertDanger(message: string){
@@ -24,7 +29,7 @@ export class AlertModalService {
   }
 
   showAlertSuccess(message: string){
-    this.showAlert(message, AlertTypes.SUCCESS);
+    this.showAlert(message, AlertTypes.SUCCESS, 3000);
   }
 
 }
