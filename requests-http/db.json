@@ -21,16 +21,28 @@
       "id": 5
     },
     {
-      "nome": "Python",
-      "id": 6
+      "id": 6,
+      "nome": "Python"
     },
     {
-      "nome": "Material 2",
-      "id": 7
+      "id": 7,
+      "nome": "Material 2"
     },
     {
       "id": 8,
       "nome": "VHDL"
+    },
+    {
+      "id": 9,
+      "nome": "C++"
+    },
+    {
+      "id": 10,
+      "nome": "Java"
+    },
+    {
+      "id": 11,
+      "nome": "Bootstrap"
     }
   ]
 }
