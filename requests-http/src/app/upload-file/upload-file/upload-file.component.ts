@@ -65,4 +65,58 @@ export class UploadFileComponent implements OnInit {
     }
   }
 
+  onDownloadExcel(){
+    this.service.download(`${environment.BASE_URL}/downloadExcel`)
+    .subscribe((res: any) => {
+      // const file = new Blob([res], {
+      //   type: res.type
+      // });
+
+      // const blob = window.URL.createObjectURL(file);
+
+      // const link = document.createElement('a');
+      // link.href = blob;
+      // link.download = 'report.xlsx';
+
+      // //link.click(); //funciona bem no chrome
+      // link.dispatchEvent(new MouseEvent('click', {
+      //   bubbles: true,
+      //   cancelable: true,
+      //   view: window
+      // }));
+
+      // setTimeout(() => { //firefox, sem timeout funciona bem no chrome
+      //   window.URL.revokeObjectURL(blob);
+      //   link.remove();
+      // }, 100);
+
+      this.service.handleFile(res, 'report.xlsx');
+
+    });
+  }
+
+  onDownloadPDF(){
+    this.service.download(`${environment.BASE_URL}/downloadPDF`)
+    .subscribe((res: any) => {
+    //   const file = new Blob([res], {
+    //     type: res.type
+    //   });
+
+    //   const blob = window.URL.createObjectURL(file);
+
+    //   const link = document.createElement('a');
+    //   link.href = blob;
+    //   link.download = 'report.pdf';
+
+    //   link.click();
+
+    //   window.URL.revokeObjectURL(blob);
+    //   link.remove();
+
+    this.service.handleFile(res, 'report.pdf');
+
+    });
+
+  }
+
 }
