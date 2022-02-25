@@ -16,7 +16,7 @@
     </div>
   </div>
   <div class="search-list">
-    <h3>{{ "total" }} registros encontrados.</h3>
+    <h3>{{ total }} Registros Encontrados.</h3>
     <table class="table" id="myTable">
       <thead>
         <tr>
@@ -24,10 +24,10 @@
           <th>Versão</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody *ngFor="let result of results$ | async">
         <tr>
-          <td>{{ "result.name" }}</td>
-          <td>{{ "result.version" }}</td>
+          <td>{{ result.name }}</td>
+          <td>{{ result.version }}</td>
         </tr>
       </tbody>
     </table>
