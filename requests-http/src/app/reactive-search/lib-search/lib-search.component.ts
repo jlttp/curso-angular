@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Observable, tap, map } from 'rxjs';
+import { Observable, tap, map, filter, distinctUntilChanged, debounceTime, switchMap } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
 @Component({
@@ -14,10 +14,28 @@ export class LibSearchComponent implements OnInit {
   readonly SEARCH_URL = 'https://api.cdnjs.com/libraries';
   results$!: Observable<any>;
   total!: number;
+  readonly FIELDS = 'name,description,version,homepage';
 
   constructor(private http: HttpClient) { }
 
   ngOnInit() {
+    //busca reativa
+    this.results$ = this.queryField.valueChanges
+    .pipe(
+      map(value => value.trim()),
+      filter(value => value.length > 1),
+      debounceTime(200),
+      distinctUntilChanged(),
+      //tap(value => console.log(value)),
+      switchMap(value => this.http.get(this.SEARCH_URL, {
+        params : {
+          search: value,
+          fields: this.FIELDS
+        }
+      })),
+      tap((res: any) => this.total = res.total),
+      map((res: any) => res.results)
+    );
   }
 
   onSearch(){
